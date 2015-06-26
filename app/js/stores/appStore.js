@@ -4,9 +4,6 @@ var assign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
 var CHANGE_EVENT = 'change';
 
-
-
-
 var appStore = assign(EventEmitter.prototype, {
   emitChange: function() {
     this.emit(CHANGE_EVENT);
@@ -20,9 +17,7 @@ var appStore = assign(EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, callback);
   },
 
-  calculatedLocation: function () {
-      return location;
-  },
+  location: null,
 
   dispatcherIndex: appDispatcher.register(function (payload) {
     switch(payload.type) {
@@ -38,21 +33,17 @@ var appStore = assign(EventEmitter.prototype, {
   })
 });
 
-var location;
-
-function init() {
+(function init(){
     navigator.geolocation.getCurrentPosition(function(position){
-         location = {
+         appStore.location = {
              lat: position.coords.latitude,
              long: position.coords.longitude
          };
         appStore.emitChange();
     }, function(error) {
-         location = 'error:' + error.message;
+         appStore.location = 'error:' + error.message;
         appStore.emitChange();
     }, {timeout:10000});
-}
-
- init();
+})();
 
 module.exports = appStore;

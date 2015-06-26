@@ -14,7 +14,7 @@ var Items = React.createClass({
     //any time change is emitted, make sure to update state
     //updating state will re-render then
     appStore.addChangeListener( function() {
-      _this.setState({location: appStore.calculatedLocation()});
+      _this.setState({location: appStore.location});
     });
   },
   render: function() {
