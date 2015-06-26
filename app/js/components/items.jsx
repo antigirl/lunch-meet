@@ -5,7 +5,7 @@ var appActions = require('../actions/appActions');
 var Items = React.createClass({
   getInitialState: function() {
     return {
-      location: 'waiting'
+      location: '...fetching '
     };
   },
   componentWillMount:function(){
@@ -19,7 +19,7 @@ var Items = React.createClass({
   },
   render: function() {
     return (<div>
-     fetching location.... {this.state.location}
+    Your location {this.state.location}
     </div>
     );
   }
