@@ -1,10 +1,11 @@
 var React = require('react');
 var appStore = require('../stores/appStore.js')
+var appActions = require('../actions/appActions');
 
 var Items = React.createClass({
   getInitialState: function() {
     return {
-      items: appStore.getItems()
+      location: 'waiting'
     };
   },
   componentWillMount:function(){
@@ -13,16 +14,13 @@ var Items = React.createClass({
     //any time change is emitted, make sure to update state
     //updating state will re-render then
     appStore.addChangeListener( function() {
-      _this.setState(appStore.getItems())
+      _this.setState({location: appStore.calculatedLocation()});
     });
   },
   render: function() {
-    return (
-      <ul>
-        {this.state.items.map(function (item) {
-            return <li>{item}</li>
-        })}
-      </ul>
+    return (<div>
+     fetching location.... {this.state.location}
+    </div>
     );
   }
 });

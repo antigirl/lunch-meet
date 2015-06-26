@@ -7,7 +7,6 @@ var App = React.createClass({
   render: function() {
     return (
       <div>
-        <Controls/>
         <Items/>
       </div>
     );
