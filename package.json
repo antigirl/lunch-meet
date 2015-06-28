@@ -4,6 +4,7 @@
   "description": "boilerplate with just npm",
   "main": "js/app.jsx",
   "dependencies": {
+    "browser-request": "^0.3.3",
     "browserify": "^10.2.4",
     "flux": "^2.0.3",
     "node-libs-browser": "^0.5.2",
@@ -12,13 +13,14 @@
     "watchify": "^3.2.2"
   },
   "devDependencies": {
-    "style-loader": "^0.12.3",
     "css-loader": "0.14.1",
     "file-loader": "^0.8.4",
+    "json-loader": "^0.5.2",
     "jsx-loader": "^0.13.2",
     "node-sass": "^3.2.0",
     "react-hot-loader": "^1.2.7",
     "sass-loader": "^1.0.2",
+    "style-loader": "^0.12.3",
     "webpack": "^1.9.11",
     "webpack-dev-server": "^1.9.0"
   },

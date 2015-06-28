@@ -1,3 +1,6 @@
+var request = require('browser-request');
+var stub = require('./stub.json');
+
 module.exports = {
     connect: function() {
         window.location = GET_TOKEN_URL;
@@ -18,8 +21,15 @@ module.exports = {
                 callback('error:' + error.message);
         }, {timeout:10000});
     },
-    venueSearch: function() {
-        //var venueSearch = 'https://api.foursquare.com/v2/venues/search?ll='+latlong+'&oauth_token='+accessToken+'&v=20150628';
+    venueSearch: function(location, accessToken, cb) {
+        var venueSearch = 'https://api.foursquare.com/v2/venues/explore?ll='+location.lat+','+location.long+'&oauth_token='+accessToken+'&v=20150628&section=food&venuePhotos=1&limit=10';
+        request(venueSearch, function(err, response, body) {
+            if(!err) {
+                cb(JSON.parse(body));
+            }
+        });
+
+        //return stub;
     }
 };
 

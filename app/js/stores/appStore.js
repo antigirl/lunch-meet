@@ -35,15 +35,20 @@ var appStore = assign(EventEmitter.prototype, {
     },
 
     getCurrentLocation: function() {
-        if (this.getAccessToken()) {
+        var token = this.getAccessToken();
+        if (token) {
             fourSquareApi.getCurrentLocation(function(resp) {
                 appStore.location = resp;
-                appStore.emitChange();
+                fourSquareApi.venueSearch(appStore.location, token, function(response) {
+                    appStore.data = response;
+                    appStore.emitChange();
+                });  //if not error then exec
             });
         }
     },
 
     location: null,
+    data: null,
 
     dispatcherIndex: appDispatcher.register(function(payload) {
         switch (payload.type) {
