@@ -2,48 +2,67 @@ var appDispatcher = require('../dispatcher/appDispatcher');
 var appActions = require('../actions/appActions');
 var assign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
+var fourSquareApi = require('../fourSquareApi');
 var CHANGE_EVENT = 'change';
 
 var appStore = assign(EventEmitter.prototype, {
-  emitChange: function() {
-    this.emit(CHANGE_EVENT);
-  },
+    emitChange: function() {
+        this.emit(CHANGE_EVENT);
+    },
 
-  addChangeListener: function(callback) {
-    this.on(CHANGE_EVENT, callback);
-  },
+    addChangeListener: function(callback) {
+        this.on(CHANGE_EVENT, callback);
+    },
 
-  removeChangeListener: function(callback) {
-    this.removeListener(CHANGE_EVENT, callback);
-  },
+    removeChangeListener: function(callback) {
+        this.removeListener(CHANGE_EVENT, callback);
+    },
 
-  location: null,
+    connect: function() {
+        fourSquareApi.connect();
+    },
 
-  dispatcherIndex: appDispatcher.register(function (payload) {
-    switch(payload.type) {
-      case 'get-location':
-      appStore.getLocation();
-      break;
-    }
+    getAccessToken: function() {
+        return fourSquareApi.getAccessToken();
+    },
 
-    appStore.emitChange();
+    isConnected: function() {
+        if (this.getAccessToken()) {
+            setTimeout(function() {
+                appStore.emitChange();
+            }, 10);
+        }
+    },
 
-    return true;
+    getCurrentLocation: function() {
+        if (this.getAccessToken()) {
+            fourSquareApi.getCurrentLocation(function(resp) {
+                appStore.location = resp;
+                appStore.emitChange();
+            });
+        }
+    },
 
-  })
+    location: null,
+
+    dispatcherIndex: appDispatcher.register(function(payload) {
+        switch (payload.type) {
+            case 'connect':
+                appStore.connect();
+                break;
+        }
+
+        appStore.emitChange();
+
+        return true;
+
+    })
 });
 
-(function init(){
-    navigator.geolocation.getCurrentPosition(function(position){
-         appStore.location = {
-             lat: position.coords.latitude,
-             long: position.coords.longitude
-         };
-        appStore.emitChange();
-    }, function(error) {
-         appStore.location = 'error:' + error.message;
-        appStore.emitChange();
-    }, {timeout:10000});
+(function init() {
+    appStore.isConnected();
+    appStore.getCurrentLocation();
 })();
+
 
 module.exports = appStore;

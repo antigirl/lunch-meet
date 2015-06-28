@@ -1,9 +1,9 @@
 var appDispatcher = require('../dispatcher/appDispatcher');
 
 module.exports = {
-  getLocation: function() {
+  connect: function() {
     appDispatcher.dispatch({
-      type: 'get-location'
+      type: 'connect'
     });
   }
-}
+};
