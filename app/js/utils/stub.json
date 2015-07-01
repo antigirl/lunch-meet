@@ -17,8 +17,8 @@
              }]
          },
          "suggestedRadius": 1356,
-         "headerLocation": "Manchester",
-         "headerFullLocation": "Manchester",
+         "headerLocation": "Manchester Stub",
+         "headerFullLocation": "Manchester Stub",
          "headerLocationGranularity": "city",
          "query": "food",
          "totalResults": 200,

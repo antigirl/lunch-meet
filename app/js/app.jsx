@@ -1,6 +1,6 @@
 var React = require('react');
-var Connection = require('./components/connection');
-var Datas = require('./components/data');
+var Connection = require('./components/Connection');
+var VenueList = require('./components/VenueList');
 require('../styles/app.scss');
 
 var App = React.createClass({
@@ -8,7 +8,7 @@ var App = React.createClass({
     return (
       <div>
         <Connection/>
-        <Datas/>
+        <VenueList/>
       </div>
     );
   }

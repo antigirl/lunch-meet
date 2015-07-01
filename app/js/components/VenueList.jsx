@@ -1,7 +1,8 @@
 var React = require('react');
 var appStore = require('../stores/appStore.js');
+var Venue = require('./Venue');
 
-var Datas = React.createClass({
+var VenueList = React.createClass({
     getInitialState: function() {
       return {
         data: null
@@ -27,13 +28,7 @@ var Datas = React.createClass({
                   <td>image</td>
               </tr>
                 {this.state.data.response.groups[0].items.map(function(item) {
-                    return (<tr>
-                        <td><img src={item.venue.photos.groups[0].items[0].prefix + '100x100' + item.venue.photos.groups[0].items[0].suffix}/></td>
-                        <td>{item.venue.name}</td>
-                        <td>{item.venue.price.message}</td>
-                        <td>{item.venue.rating}</td>
-                        <td>{item.venue.url}</td>
-                    </tr>);
+                    return (<Venue name={item.venue.name} price={item.venue.price.message} rating={item.venue.rating} url={item.venue.url} img={item.venue.photos.groups[0].items[0].prefix + '100x100' + item.venue.photos.groups[0].items[0].suffix}/>);
                 })}
           </table> : null
           }
@@ -42,4 +37,4 @@ var Datas = React.createClass({
   }
 });
 
-module.exports = Datas;
+module.exports = VenueList;
