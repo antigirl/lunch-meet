@@ -6,10 +6,10 @@ npm start (http://localhost:8080)<br/>
 npm run build
 
 #Code Structure
-API calls are now made via the actions.
-Actions make the API calls, the API then dispatches an event with its status [PENDING/FINISHED]
+API calls are now made via the actions.<br/>
+Actions make the API calls, the API then dispatches an event with its status [PENDING/FINISHED] <br/>
 The Store naturally picks up the registered dispatches [and any payloads] and emits events, components listen re-render with new data
-This stays true to the flux architecture and this means that any store can listen to the registered dispatches. The Logic stays within the API and no extra events need to emitted.
+This stays true to the flux architecture and this means that any store can listen to the registered dispatches. The Logic stays within the API and no extra events need to emitted.<br/><br/>
 More: http://www.code-experience.com/async-requests-with-react-js-and-flux-revisited/
 
 #Four Square API
