@@ -1,5 +1,6 @@
 var appDispatcher = require('../dispatcher/appDispatcher');
 var appActions = require('../actions/appActions');
+var constants = require('../actions/constants');
 var assign = require('react/lib/Object.assign');
 var EventEmitter = require('events').EventEmitter;
 var fourSquareApi = require('../utils/fourSquareApi');
@@ -24,22 +25,21 @@ var appStore = assign(EventEmitter.prototype, {
 
     dispatcherIndex: appDispatcher.register(function(payload) {
         switch (payload.type) {
-            case 'connect':
+            case constants.CONNECT:
                 fourSquareApi.connect();
                 break;
 
-            case 'isConnected':
+            case constants.IS_CONNECTED:
                 appStore.connected = true;
                 appActions.getCurrentLocation();
                 break;
 
-            case 'location':
+            case constants.LOCATION:
                 appStore.location = payload.response;
                 appActions.venueSearch();
                 break;
 
-            case 'venueSearch':
-            console.log(appStore.data);
+            case constants.VENUE_SEARCH:
                 appStore.data = payload.response;
                 break;
         }

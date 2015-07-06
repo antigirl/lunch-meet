@@ -1,29 +1,30 @@
 var appDispatcher = require('../dispatcher/appDispatcher');
 var fourSquareApi = require('../utils/fourSquareApi');
+var constants = require('./constants');
 var Promise = require('Promise');
 
 module.exports = {
     connectFourSquare: function() {
         appDispatcher.dispatch({
-            type: 'connect'
+            type: constants.CONNECT
         });
     },
     isConnected: function() {
         fourSquareApi.isConnected().then(function() {
             appDispatcher.dispatch({
-                type: 'isConnected'
+                type: constants.IS_CONNECTED
             });
         });
     },
     getCurrentLocation: function() {
         fourSquareApi.getCurrentLocation().then(function(location) {
             appDispatcher.dispatch({
-                type: 'location',
+                type: constants.LOCATION,
                 response: location
             });
         }).catch(function() {
             appDispatcher.dispatch({
-                type: 'error',
+                type: constants.ERROR,
                 response: errors
             });
         });
@@ -31,7 +32,7 @@ module.exports = {
     venueSearch: function() {
         fourSquareApi.venueSearch().then(function(body) {
             appDispatcher.dispatch({
-                type: 'venueSearch',
+                type: constants.VENUE_SEARCH,
                 response: JSON.parse(body)
             });
         });
